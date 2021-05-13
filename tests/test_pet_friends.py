@@ -72,8 +72,8 @@ def test_add_new_pet_with_valid_data(name='Gatido', animal_type='gatido',
     assert result['name'] == name
 
 
-def test_add_new_pet_with_invalid_age(name='Zebra',animal_type='терьер',
-                                       age=invalid_age, pet_photo='images/cat1.jpg'):
+def test_add_new_pet_with_invalid_age(name='Zebra', animal_type='терьер',
+                                      age=invalid_age, pet_photo='images/cat1.jpg'):
     """Проверяем что возраст питомца нельзя обозначить буквами"""
 
     # Получаем полный путь изображения питомца и сохраняем в переменную pet_photo
@@ -100,7 +100,7 @@ def test_successful_delete_self_pet():
     # Проверяем - если список своих питомцев пустой, то добавляем нового
     # и опять запрашиваем список своих питомцев
     if len(my_pets['pets']) == 0:
-        pf.add_new_pet(auth_key, "Суперкот", "кот", 3, "images/cat1.jpg")
+        pf.add_new_pet(auth_key, "Суперкот", "кот", '3', "images/cat1.jpg")
         _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
 
     # Берём id первого питомца из списка и отправляем запрос на удаление
@@ -119,7 +119,6 @@ def test_successful_update_self_pet_info(name='Мурзик_updated4', animal_ty
                                          age='5556'):
     """Проверяем возможность обновления информации о питомце"""
 
-    pet_photo = os.path.join(os.path.dirname(__file__))
     # Получаем ключ auth_key и список своих питомцев
     _, auth_key = pf.get_api_key(valid_email, valid_password)
     _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
@@ -137,8 +136,8 @@ def test_successful_update_self_pet_info(name='Мурзик_updated4', animal_ty
         raise Exception("There is no my pets")
 
 
-def test_add_new_pet_no_photo_with_valid_data(name='Gatido_no_photo', animal_type='kotik',
-                                     age='4'):
+def test_add_new_pet_no_photo_with_valid_data(name='Gatido_no_photo2', animal_type='kotik2',
+                                              age='5'):
     """Проверяем что можно быстро добавить питомца без фото с корректными данными"""
 
     # Запрашиваем ключ api и сохраняем в переменую auth_key
@@ -150,6 +149,7 @@ def test_add_new_pet_no_photo_with_valid_data(name='Gatido_no_photo', animal_typ
     # Сверяем полученный ответ с ожидаемым результатом
     assert status == 200
     assert result['name'] == name
+    assert result['pet_photo'] is ''
 
 
 def test_successful_update_self_pet_photo(pet_photo='images/nocat.jpg'):
@@ -166,17 +166,8 @@ def test_successful_update_self_pet_photo(pet_photo='images/nocat.jpg'):
 
         # Проверяем что статус ответа = 200 и имя питомца соответствует заданному
         assert status == 200
-        # assert result['pet_photo'] == pet_photo (выдаёт оишибку)
+        assert result['pet_photo'] is not ''  # (выдаёт ошибку)
 
     else:
         # если спиок питомцев пустой, то выкидываем исключение с текстом об отсутствии своих питомцев
         raise Exception("There is no my pets")
-
-
-
-
-
-
-
-
-

@@ -47,7 +47,7 @@ class PetFriends:
         return status, result
 
     def add_new_pet(self, auth_key: json, name: str, animal_type: str,
-                    age: int, pet_photo: str) -> json:
+                    age: str, pet_photo: str) -> json:
         """Метод отправляет (постит) на сервер данные о добавляемом питомце и возвращает статус
         запроса на сервер и результат в формате JSON с данными добавленного питомца"""
 
@@ -109,7 +109,7 @@ class PetFriends:
         return status, result
 
     def add_pet_no_photo(self, auth_key: json, name: str, animal_type: str,
-                    age: str) -> json:
+                         age: str) -> json:
         """Быстрое добавление питмоца (без фото):
         Метод отправляет (постит) на сервер данные о добавляемом питомце и возвращает статус
         запроса на сервер и результат в формате JSON с данными добавленного питомца"""
@@ -148,5 +148,3 @@ class PetFriends:
         except json.decoder.JSONDecodeError:
             result = res.text
         return status, result
-
-
