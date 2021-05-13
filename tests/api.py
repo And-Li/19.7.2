@@ -47,7 +47,7 @@ class PetFriends:
         return status, result
 
     def add_new_pet(self, auth_key: json, name: str, animal_type: str,
-                    age: str, pet_photo: str) -> json:
+                    age: int, pet_photo: str) -> json:
         """Метод отправляет (постит) на сервер данные о добавляемом питомце и возвращает статус
         запроса на сервер и результат в формате JSON с данными добавленного питомца"""
 
@@ -87,7 +87,7 @@ class PetFriends:
         return status, result
 
     def update_pet_info(self, auth_key: json, pet_id: str, name: str,
-                        animal_type: str, age: int, pet_photo: str) -> json:
+                        animal_type: str, age: str) -> json:
         """Метод отправляет запрос на сервер о обновлении данных питомуа по указанному ID и
         возвращает статус запроса и result в формате JSON с обновлённыи данными питомца"""
 
@@ -96,8 +96,7 @@ class PetFriends:
                 'name': name,
                 'animal_type': animal_type,
                 'age': age,
-                'pet_photo': (pet_photo, open(pet_photo, 'rb'), 'image/jpeg')
-            })
+                 })
         headers = {'auth_key': auth_key['key'], 'Content-Type': data.content_type}
 
         res = requests.put(self.base_url + 'api/pets/' + pet_id, headers=headers, data=data)
@@ -131,15 +130,15 @@ class PetFriends:
         print(result)
         return status, result
 
-    def add_photo_to_pet(self, auth_key: json, pet_id: str, pet_photo: str) -> json:
+    def update_pet_photo(self, auth_key: json, pet_id: str, pet_photo: str) -> json:
         """Метод отправляет запрос на сервер о обновлении данных питомуа по указанному ID и
-        возвращает статус запроса и result в формате JSON с обновлённым фото питомца"""
+        возвращает статус запроса и result в формате JSON с обновлённыи данными питомца"""
 
-        data = {
-                'pet_photo': pet_photo}
-        headers = {'auth_key': auth_key['key']}
+        data = MultipartEncoder(
+            fields={'pet_photo': (pet_photo, open(pet_photo, 'rb'), 'image/jpeg')})
+        headers = {'auth_key': auth_key['key'], 'Content-Type': data.content_type}
 
-        res = requests.post(self.base_url + '/api/pets/set_photo/' + pet_id, headers=headers, data=data)
+        res = requests.post(self.base_url + 'api/pets/set_photo/' + pet_id, headers=headers, data=data)
         status = res.status_code
         result = ""
         try:
