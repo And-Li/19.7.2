@@ -11,7 +11,7 @@ Autotests for https://petfriends1.herokuapp.com/:
 - updating existing pet info
 - quick pet adding (without photo)
 - updating pet info (adding photo to quikly created pet)
-- 
+
 API documentation is here: https://petfriends1.herokuapp.com/apidocs/#/
 
 Need to install **requests, requests.toolbelt**
