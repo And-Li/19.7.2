@@ -153,7 +153,7 @@ def test_add_new_pet_no_photo_with_valid_data(name='Gatido_no_photo', animal_typ
 
 
 def test_successful_update_self_pet_photo(pet_photo='images/nocat.jpg'):
-    """Проверяем возможность обновления информации о питомце"""
+    """Проверяем возможность добавления фото к питомцу"""
 
     pet_photo = os.path.join(os.path.dirname(__file__), pet_photo)
     # Получаем ключ auth_key и список своих питомцев
